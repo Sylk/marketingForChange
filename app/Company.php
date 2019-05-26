@@ -17,4 +17,9 @@ class Company extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function employee()
+    {
+        return $this->hasMany('App\Employee');
+    }
 }
