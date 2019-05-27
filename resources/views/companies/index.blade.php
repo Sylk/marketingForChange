@@ -10,20 +10,21 @@
                     <div class="card-body">
                         <div class="row">
                         @foreach($companies as $company)
-                            <div class="col-4 pb-3">
+                            <div class="col-6 pb-3">
                                 <div class="card h-100">
                                     <img class="card-img-top" src="{{$company->logo}}" alt="Card image cap">
                                     <div class="card-body">
                                         <h5 class="card-title">{{$company->name}}</h5>
                                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="/company/{{$company->id}}" class="btn btn-primary">Edit</a>
+                                        <a href="/company/{{$company->id}}" class="btn btn-primary p-1">Edit</a>
+                                        <a href="/company/{{$company->id}}/employees" class="btn btn-secondary p-1">Employees</a>
 
-                                        <form method="POST" action="/company/{{$company->id}}">
+                                        <form method="POST" action="/company/{{$company->id}}" class="d-inline-block">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
 
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-danger" value="Obliterate" onclick="return confirm('This will destroy all employees connected as well are you sure?')">
+                                                <input type="submit" class="btn btn-danger p-1" value="Obliterate" onclick="return confirm('This will destroy all employees connected as well are you sure?')">
                                             </div>
                                         </form>
                                     </div>

@@ -76,9 +76,8 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-//        dd('jjj');
         $company = Company::where('id',$id)->firstOrFail();
-//dd($company);
+
         return view('companies.edit')->with($company);
     }
 

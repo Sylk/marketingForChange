@@ -32,23 +32,6 @@
                                             <input type="file" class="form-control-file" id="logo" name="logo">
                                         </div>
                                     </form>
-
-                                    {{--<div class="card h-100">--}}
-                                        {{--<img class="card-img-top" src="{{$company->logo}}" alt="Card image cap">--}}
-                                        {{--<div class="card-body">--}}
-                                        {{--</div>--}}
-                                        {{--<form method="POST" action="/company/{{$company->id}}">--}}
-                                            {{--< class="card-title">{{$company->name}}</>--}}
-
-                                            {{--{{ csrf_field() }}--}}
-                                            {{--Patch is better here since it's not a new resource--}}
-                                            {{--{{ method_field('PATCH') }}--}}
-
-                                            {{--<div class="form-group">--}}
-                                                {{--<input type="submit" class="btn btn-danger" value="Obliterate" onclick="return confirm('This will destroy all employees connected as well are you sure?')">--}}
-                                            {{--</div>--}}
-                                        {{--</form>--}}
-                                    {{--</div>--}}
                                 </div>
                         </div>
                         {{ $companies->links() }}
