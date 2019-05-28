@@ -9,6 +9,13 @@
 
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-6 pb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <a href="{{route('company.create')}}" class="btn btn-primary p-1">New Company</a>
+                                    </div>
+                                </div>
+                            </div>
                         @foreach($companies as $company)
                             <div class="col-6 pb-3">
                                 <div class="card h-100">
@@ -16,10 +23,10 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{$company->name}}</h5>
                                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="/company/{{$company->id}}" class="btn btn-primary p-1">Edit</a>
-                                        <a href="/company/{{$company->id}}/employees" class="btn btn-secondary p-1">Employees</a>
+                                        <a href="/{{$company->id}}" class="btn btn-primary p-1">Edit</a>
+                                        <a href="/{{$company->id}}/employees" class="btn btn-secondary p-1">Employees</a>
 
-                                        <form method="POST" action="/company/{{$company->id}}" class="d-inline-block">
+                                        <form method="POST" action="{{route('company.delete', ['companyId', $company->id])}}" class="d-inline-block">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
 

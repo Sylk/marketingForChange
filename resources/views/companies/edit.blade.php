@@ -31,10 +31,10 @@
                                             <label for="logo">Logo</label>
                                             <input type="file" class="form-control-file" id="logo" name="logo">
                                         </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
                                     </form>
                                 </div>
                         </div>
-                        {{ $companies->links() }}
                     </div>
                 </div>
             </div>

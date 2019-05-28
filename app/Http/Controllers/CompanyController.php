@@ -29,7 +29,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('companies.create');
     }
 
     /**
@@ -50,11 +50,11 @@ class CompanyController extends Controller
         Storage::put('photos', new File('storage/app/public'));
 
         /** @var Company $company */
-        $company = Company::where($input->id)->firstOrFail();
+        $company = Company::firstOrCreate();
 
         $company->save();
 
-        return view('companies.show')->with('message', 'Company updated');
+        return view('companies.show')->with('message', 'Company created!');
     }
 
     /**
@@ -78,7 +78,7 @@ class CompanyController extends Controller
     {
         $company = Company::where('id',$id)->firstOrFail();
 
-        return view('companies.edit')->with($company);
+        return view('companies.edit')->with('company', $company);
     }
 
     /**
@@ -90,7 +90,21 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->validate([
+            'name' => 'required|string',
+            'email' => 'email',
+            'logo' => 'dimensions:min_width=100,min_height=100',
+            'website' => 'url'
+        ]);
+
+        Storage::put('photos', new File('storage/app/public'));
+
+        /** @var Company $company */
+        $company = Company::where($input->id)->firstOrFail();
+
+        $company->save();
+
+        return view('companies.show')->with('message', 'Company updated');
     }
 
     /**
@@ -101,7 +115,7 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-//      TODO: Collect employees and then purge them with alongside the company
+//      TODO: Collect employees and then purge them alongside the company
         Company::destroy($id);
 
         return view('companies.index');

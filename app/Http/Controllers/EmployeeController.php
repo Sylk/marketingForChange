@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -14,9 +15,9 @@ class EmployeeController extends Controller
      */
     public function index($companyId)
     {
-        $employees = DB::table('employees')->where('company', $companyId)->paginate(10);
+        $employees = Employee::where('company_id', $companyId)->paginate(10);
 
-        return view('employee.index', ['employees' => $employees]);
+        return view('employees.index', ['employees' => $employees]);
     }
 
     /**
@@ -45,8 +46,6 @@ class EmployeeController extends Controller
             'phone' => 'phone'
         ]);
 
-        // Note: Explicit is better than implicit in this case for use of the 'id'
-        // TODO: Could visit this again... where('id', $request->id)
         /** @var Employee $employee */
         $employee = Employee::where('id', $request->id)->firstOrFail();
 
@@ -65,7 +64,7 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $employee = Employee::where($id)->firstOrFail();
+        Employee::where($id)->firstOrFail();
 
         return view('employee.show', compact(
             'first_name',
@@ -82,9 +81,11 @@ class EmployeeController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($companyId, $employee)
     {
-        //
+        $employee = Employee::where('id', $employee)->firstOrFail();
+
+        return view('employees.edit')->with('employee', $employee);
     }
 
     /**
@@ -94,9 +95,24 @@ class EmployeeController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $companyId, $employeeId)
     {
-        //
+        $input = $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'company' => 'string',
+            'email' => 'email',
+            'phone' => 'string'
+        ]);
+
+        /** @var Employee $employee */
+        $employee = Employee::where('id', $employeeId)->firstOrFail();
+
+        $employee->forceFill($input);
+
+        $employee->save();
+
+        return view('employees.edit', ['message', 'Employee updated', 'employee', $employee]);
     }
 
     /**
@@ -105,8 +121,10 @@ class EmployeeController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $employeeId)
     {
-        //
+        Employee::destroy($employeeId);
+
+        return redirect()->route('employees.index');
     }
 }
